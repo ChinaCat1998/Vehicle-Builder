@@ -97,7 +97,7 @@ console.log(
     ),
     console.log(
       `Wheel 4: ${this.wheels[3].getDiameter} inch with a ${this.wheels[3].getTireBrand} tire`
-    ),
+    );
   }
 
 }
