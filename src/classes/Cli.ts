@@ -61,7 +61,7 @@ class Cli {
           name: 'vehicleType',
           message: 'Select a vehicle type',
           // TODO: Update the choices array to include Truck and Motorbike
-          choices: ['Car'],//[Truck],[Motorbike]
+          choices: ['Car', 'Truck', 'Motorbike'],
         },
       ])
       .then((answers) => {
@@ -169,18 +169,17 @@ class Cli {
           message: 'Enter Towing Capacity',
         },
       ])
-      .then((answers) => {
+      .then((answers):any => {
         // TODO: Use the answers object to pass the required properties to the Truck constructor
             const truck = new Truck(
           Cli.generateVin(),
           answers.color,
           answers.make,
           answers.model,
-          parseInt(answers.year),
-          parseInt(answers.weight),
-          parseInt(answers.topSpeed),
-          parseInt(answers.towingCapacity),
-          []
+          answers.year,
+          answers.weight,
+          answers.topSpeed,
+          answers.towingCapacity,
       );
           this.vehicles.push(truck);
           this.selectedVehicleVin = truck.vin;
@@ -254,9 +253,9 @@ class Cli {
           answers.color,
           answers.make,
           answers.model,
-          parseInt(answers.year),
-          parseInt(answers.weight),
-          parseInt(answers.topSpeed),
+          answers.year,
+          answers.weight,
+          answers.topSpeed,
           [
             new Wheel(parseInt(answers.frontWheelDiameter), answers.frontWheelBrand),
             new Wheel(parseInt(answers.rearWheelDiameter), answers.rearWheelBrand),
@@ -273,7 +272,8 @@ class Cli {
   }
   // method to find a vehicle to tow
   // TODO: add a parameter to accept a truck object
-  findVehicleToTow(): void {
+  findVehicleToTow(truck :Truck): void {
+    if 
     inquirer
       .prompt([
         {
@@ -318,7 +318,7 @@ class Cli {
           ],
         },
       ])
-      .then((answers) => {
+      .then((answers:any) => {
         // perform the selected action
         if (answers.action === 'Print details') {
           // find the selected vehicle and print its details
@@ -413,7 +413,7 @@ class Cli {
         } else {
           this.chooseVehicle();
         }
-      });
+      }),
   }
 }
 

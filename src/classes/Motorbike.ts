@@ -22,7 +22,7 @@ class Motorbike extends Vehicle {
     weight:number,
     topSpeed:number,
     wheels:Wheel[],
-  ){;
+  ){
     super();
 
     this.vin = vin;
@@ -32,7 +32,6 @@ class Motorbike extends Vehicle {
     this.year = year;
     this.weight = weight;
     this.topSpeed = topSpeed;
-    this.wheels = wheels;
 
     if (wheels.length !== 2){
     this.wheels = [new Wheel(), new Wheel()];
