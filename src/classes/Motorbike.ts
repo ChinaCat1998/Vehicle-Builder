@@ -1,6 +1,6 @@
 // Importing Vehicle and Wheel classes
-import Vehicle from './Vehicle.js';
-import Wheel from './Wheel.js';
+import Vehicle from '../classes/Vehicle.js';
+import Wheel from '../classes/Wheel.js';
 
 // TODO: The Motorbike class should extend the Vehicle class
 class Motorbike extends Vehicle {

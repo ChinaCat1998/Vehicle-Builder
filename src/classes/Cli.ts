@@ -1,9 +1,9 @@
 // importing classes from other files
 import inquirer from "inquirer";
-import Truck from "./Truck.js";
-import Car from "./Car.js";
-import Motorbike from "./Motorbike.js";
-import Wheel from "./Wheel.js";
+import Truck from "../classes/Truck.js";
+import Car from "../classes/Car.js";
+import Motorbike from "../classes/Motorbike.js";
+import Wheel from "../classes/Wheel.js";
 
 // define the Cli class
 class Cli {
@@ -273,6 +273,7 @@ class Cli {
       new Wheel(answers.rearWheelDiameter, answers.rearWheelBrand),
     ]
   );
+  answers.push(motorbike);
   this.vehicles.push(motorbike);
   this.selectedVehicleVin = motorbike.vin;
   this.performActions();
@@ -299,11 +300,12 @@ class Cli {
         },
       ])
       .then((answers:any) => {
-        if (answers.selectedVehicle=== truck.vin){
+        if (answers.selectedVehicle=== Truck) {
           console.log("Truck cannot tow itself"),
-        } else if (answers.selectedVehicle instanceof Truck && answers.selectedVehicle.vin !== truck.vin && answers.selectedVehicle.weight <= truck.towingCapacity) {
-          truck.tow(answers.selectedVehicle);
+        } else if (answers.selectedVehicle instanceof Motorbike|| Car && answers.selectedVehicle.vin !== truck.vin && answers.selectedVehicle.weight <= truck.towingCapacity) {
+          Truck.performAction.tow(answers.selectedVehicle);
           this.performActions();
+          return console.log(`Towing ${answers.selectedVehicle.make} ${answers.selectedVehicle.model}. Would you like to add another vehicle?`);
         }
       }
         // TODO: check if the selected vehicle is the truck
@@ -314,7 +316,7 @@ class Cli {
 
   // method to perform actions on a vehicle
   async performActions(): Promise<void> {
-    const {action} = await inquirer.prompt([
+    const {answers} = await inquirer.prompt([
     inquirer
       .prompt([
         {
@@ -339,7 +341,7 @@ class Cli {
         },
       ]),
     ]);
-      .then((answers:any) => {
+      .then ((answers:any) => {
         // perform the selected action
         if (answers.action === 'Print details') {
           // find the selected vehicle and print its details
@@ -414,6 +416,18 @@ class Cli {
               }
             }
           }
+        } else if (answers.action === 'Wheelie') {
+          for (let i = 0; i < this.vehicles.length; i++) {
+            if (this.vehicles[i].vin === this.selectedVehicleVin) {
+              const selectedVehicle = this.vehicles[i];
+              if (selectedVehicle instanceof Motorbike) {
+                selectedVehicle.wheelie();
+              } else {
+                console.log("Selected vehicle is not a motorbike");
+              }
+            }
+          }
+        }
         // TODO: add statements to perform the tow action only if the selected vehicle is a truck. Call the findVehicleToTow method to find a vehicle to tow and pass the selected truck as an argument. After calling the findVehicleToTow method, you will need to return to avoid instantly calling the performActions method again since findVehicleToTow is asynchronous.
         // TODO: add statements to perform the wheelie action only if the selected vehicle is a motorbike
         } else if (answers.action === 'Select or create another vehicle') {
@@ -428,9 +442,8 @@ class Cli {
           // if the user does not want to exit, perform actions on the selected vehicle
           this.performActions();
         }
-      }
-      )};
   }
+      
 
 
   // method to start the cli
@@ -453,7 +466,12 @@ class Cli {
           this.chooseVehicle();
         }
       }),
-  }
-
+  
+    }
+}
 // export the Cli class
 export default Cli;
+function then(arg0: (answers: any) => void) {
+  throw new Error("Function not implemented.");
+}
+
