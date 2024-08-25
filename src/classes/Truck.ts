@@ -27,7 +27,7 @@ class Truck extends Vehicle implements AbleToTow {
     weight:number,
     topSpeed:number,
     wheels:Wheel[],
-    towingCapacity?:number,
+    towingCapacity:number =0,
   ){
     super();
 
@@ -38,7 +38,7 @@ class Truck extends Vehicle implements AbleToTow {
     this.year = year,
     this.weight = weight,
     this.topSpeed = topSpeed,
-    this.towingCapacity = towingCapacity ?? 0;
+    this.towingCapacity = towingCapacity;
 
     if (wheels.length !== 4){
       this.wheels = [new Wheel(), new Wheel(), new Wheel(), new Wheel()];
@@ -60,9 +60,9 @@ class Truck extends Vehicle implements AbleToTow {
   // TODO: Implement the tow method from the AbleToTow interface
   tow(vehicle: Truck | Motorbike | Car): void {
     if (vehicle.weight <= this.towingCapacity) {
-      console.log(`Vehicle is being towed`);
+      console.log(`Towing ${vehicle.make} ${vehicle.model}`);
     } else {
-      console.log(`Vehicle is too heavy to be towed`);
+      console.log(`${vehicle.make} ${vehicle.model} is too heavy to be towed`);
     }
   }
 
@@ -85,13 +85,26 @@ class Truck extends Vehicle implements AbleToTow {
     console.log(`Weight: ${this.weight} lbs`);
     console.log(`Top Speed: ${this.topSpeed} mph`);
     console.log(`Towing Capacity: ${this.towingCapacity} lbs`);
+
+    console.log(
+      `Wheel 1: ${this.wheels[0].getDiameter} inch with a ${this.wheels[0].getTireBrand} tire`
+    );
+    console.log(
+      `Wheel 2: ${this.wheels[1].getDiameter} inch with a ${this.wheels[1].getTireBrand} tire`
+    );
+    console.log(
+      `Wheel 3: ${this.wheels[2].getDiameter} inch with a ${this.wheels[2].getTireBrand} tire`
+    );
+    console.log(
+      `Wheel 4: ${this.wheels[3].getDiameter} inch with a ${this.wheels[3].getTireBrand} tire`
+    );
   }
+}
 
 
     // TODO: The method should call the printDetails method of the parent class
     // TODO: The method should log the details of the Truck
     // TODO: The details should include the VIN, make, model, year, weight, top speed, color, towing capacity, and wheels
-}
 // Export the Truck class as the default export
 
 export default Truck;

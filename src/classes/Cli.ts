@@ -299,10 +299,10 @@ class Cli {
         },
       ])
       .then((answers:any) => {
-        if (answers.vehicleToTow.vin === truck.vin){
+        if (answers.selectedVehicle=== truck.vin){
           console.log("Truck cannot tow itself"),
-        } else {
-          truck.tow(answers.vehicleToTow);
+        } else if (answers.selectedVehicle instanceof Truck && answers.selectedVehicle.vin !== truck.vin && answers.selectedVehicle.weight <= truck.towingCapacity) {
+          truck.tow(answers.selectedVehicle);
           this.performActions();
         }
       }
@@ -313,7 +313,8 @@ class Cli {
   }
 
   // method to perform actions on a vehicle
-  performActions(): void {
+  async performActions(): Promise<void> {
+    const {action} = await inquirer.prompt([
     inquirer
       .prompt([
         {
@@ -336,7 +337,8 @@ class Cli {
             'Exit',
           ],
         },
-      ])
+      ]),
+    ]);
       .then((answers:any) => {
         // perform the selected action
         if (answers.action === 'Print details') {
@@ -452,7 +454,6 @@ class Cli {
         }
       }),
   }
-
 
 // export the Cli class
 export default Cli;
