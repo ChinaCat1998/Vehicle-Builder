@@ -19,9 +19,6 @@ class Cli {
     this.vehicles = vehicles;
     
   }
-  /*findVehicleToTow(): Truck | undefined {
-    return this.vehicles.find((vehicle) => vehicle instanceof Truck) as Truck | undefined;
-  }*/
 
   // static method to generate a vin
   static generateVin(): string {
@@ -279,16 +276,17 @@ class Cli {
   this.vehicles.push(motorbike);
   this.selectedVehicleVin = motorbike.vin;
   this.performActions();
-  // TODO: Use the answers object to pass the required properties to the Motorbike constructor
+  // :Use the answers object to pass the required properties to the Motorbike constructor
   // : push the motorbike to the vehicles array
   // : set the selectedVehicleVin to the vin of the motorbike
   // : perform actions on the motorbike
 });
   // method to find a vehicle to tow
-  // TODO: add a parameter to accept a truck object
+  // : add a parameter to accept a truck object
  
 };
- findVehicleToTow(truck: Truck): void {
+ async findVehicleToTow(truck: Truck): Promise <void> {
+  const answers= await 
     inquirer
       .prompt([
         {
@@ -314,13 +312,12 @@ class Cli {
           this.performActions();
           return console.log(`Towing ${answers.selectedVehicle.make} ${answers.selectedVehicle.model}. Would you like to add another vehicle?`);
         }
-        // TODO: check if the selected vehicle is the truck
-        // TODO: if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
-        // TODO: if it is not, tow the selected vehicle then perform actions on the truck to allow the user to select another action
+        // : check if the selected vehicle is the truck
+        // : if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
+        // : if it is not, tow the selected vehicle then perform actions on the truck to allow the user to select another action
       })
   }  // method to perform actions on a vehicle
-  async performActions(): Promise<void> {
-    const answers = await inquirer.prompt([
+  performActions(): void {
     inquirer
       .prompt([
         {
@@ -343,9 +340,8 @@ class Cli {
             'Exit',
           ],
         },
-      ]),
-    ])
-      .then((answers: any) => {
+      ])
+    .then((answers: any) => {
         // perform the selected action
         if (answers.action === 'Print details') {
           // find the selected vehicle and print its details
@@ -431,8 +427,8 @@ class Cli {
               }
             }
           }
-        // TODO: add statements to perform the tow action only if the selected vehicle is a truck. Call the findVehicleToTow method to find a vehicle to tow and pass the selected truck as an argument. After calling the findVehicleToTow method, you will need to return to avoid instantly calling the performActions method again since findVehicleToTow is asynchronous.
-        // TODO: add statements to perform the wheelie action only if the selected vehicle is a motorbike
+        // : add statements to perform the tow action only if the selected vehicle is a truck. Call the findVehicleToTow method to find a vehicle to tow and pass the selected truck as an argument. After calling the findVehicleToTow method, you will need to return to avoid instantly calling the performActions method again since findVehicleToTow is asynchronous.
+        // : add statements to perform the wheelie action only if the selected vehicle is a motorbike
         } else if (answers.action === 'Select or create another vehicle') {
           // start the cli to return to the initial prompt if the user wants to select or create another vehicle
           this.startCli();
@@ -477,4 +473,3 @@ export default Cli;
 function then(arg0: (answers: any) => void) {
   throw new Error("Function not implemented.");
 }
-
