@@ -19,9 +19,9 @@ class Cli {
     this.vehicles = vehicles;
     
   }
-  findVehicleToTow(): Truck | undefined {
+  /*findVehicleToTow(): Truck | undefined {
     return this.vehicles.find((vehicle) => vehicle instanceof Truck) as Truck | undefined;
-  }
+  }*/
 
   // static method to generate a vin
   static generateVin(): string {
@@ -198,7 +198,6 @@ class Cli {
           this.vehicles.push(truck);
           this.selectedVehicleVin = truck.vin;
           this.performActions();
-          this.tow(truck);
         // : push the truck to the vehicles array
 
         // : set the selectedVehicleVin to the vin of the truck
@@ -287,7 +286,9 @@ class Cli {
 });
   // method to find a vehicle to tow
   // TODO: add a parameter to accept a truck object
-  function findVehicleToTow(truck: Truck); void {
+ 
+};
+ findVehicleToTow(truck: Truck): void {
     inquirer
       .prompt([
         {
@@ -301,7 +302,7 @@ class Cli {
             };
           }),
         }])
-      .then((answers:any) => {
+      .then((answers) => {
         const selectedVehicle = answers.vehicleToTow;
         if (answers.selectedVehicle instanceof Truck) {
           console.log("Truck cannot tow itself")
@@ -309,7 +310,7 @@ class Cli {
          answers.selectedVehicle.vin !== truck.vin && 
          answers.selectedVehicle.weight <= truck.towingCapacity
         ) {
-          truck.performActions.tow(answers.selectedVehicle);
+          truck.tow(answers.selectedVehicle);
           this.performActions();
           return console.log(`Towing ${answers.selectedVehicle.make} ${answers.selectedVehicle.model}. Would you like to add another vehicle?`);
         }
@@ -317,12 +318,9 @@ class Cli {
         // TODO: if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
         // TODO: if it is not, tow the selected vehicle then perform actions on the truck to allow the user to select another action
       })
-  }
-};
-
-  // method to perform actions on a vehicle
+  }  // method to perform actions on a vehicle
   async performActions(): Promise<void> {
-    const {answers} = await inquirer.prompt([
+    const answers = await inquirer.prompt([
     inquirer
       .prompt([
         {
@@ -346,8 +344,8 @@ class Cli {
           ],
         },
       ]),
-    ]);
-      .then ((answers:any) => {
+    ])
+      .then((answers: any) => {
         // perform the selected action
         if (answers.action === 'Print details') {
           // find the selected vehicle and print its details
@@ -439,7 +437,7 @@ class Cli {
           // start the cli to return to the initial prompt if the user wants to select or create another vehicle
           this.startCli();
           return;
-        } else {
+        }else {
           // exit the cli if the user selects exit
           this.exit = true;
         }
@@ -447,8 +445,9 @@ class Cli {
           // if the user does not want to exit, perform actions on the selected vehicle
           this.performActions();
         }
-  }
-}
+      
+      },
+      )};
       
 
 
@@ -471,9 +470,7 @@ class Cli {
         } else {
           this.chooseVehicle();
         }
-      }),
-  
-  }
+      })};
 }
 // export the Cli class
 export default Cli;
