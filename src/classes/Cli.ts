@@ -301,16 +301,15 @@ class Cli {
           }),
         }])
       .then((answers) => {
-        const selectedVehicle = answers.vehicleToTow;
-        if (answers.selectedVehicle instanceof Truck) {
+        if (answers.vehicleToTow instanceof Truck) {
           console.log("Truck cannot tow itself")
-        } else if ((selectedVehicle instanceof Motorbike|| selectedVehicle instanceof Car) &&
-         answers.selectedVehicle.vin !== truck.vin && 
-         answers.selectedVehicle.weight <= truck.towingCapacity
+        } else if ((answers.vehicleToTow instanceof Motorbike|| answers.vehicleToTow instanceof Car) &&
+         answers.vehicleToTow.vin !== truck.vin && 
+         answers.vehicleToTow.weight <= truck.towingCapacity
         ) {
-          truck.tow(answers.selectedVehicle);
+          truck.tow(answers.vehicleToTow);
           this.performActions();
-          return console.log(`Towing ${answers.selectedVehicle.make} ${answers.selectedVehicle.model}. Would you like to add another vehicle?`);
+          return console.log(`Towing ${answers.vehicleToTow.make} ${answers.vehicleToTow.model}. Would you like to add another vehicle?`);
         }
         // : check if the selected vehicle is the truck
         // : if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
